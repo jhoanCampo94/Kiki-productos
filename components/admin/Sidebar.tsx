@@ -24,7 +24,7 @@ export default function Sidebar() {
   ];
 
   return (
-    <nav className="flex h-full w-64 flex-col justify-between border-r bg-white px-6 py-8">
+    <nav className="flex h-full w-64 flex-col justify-between border-r bg-white px-6 py-8 transition-all duration-300 hover:translate-x-1">
       <header className="mb-10">
         <h1 className="text-2xl font-bold tracking-tight text-pink-600">
           🌸 Kiki Productos

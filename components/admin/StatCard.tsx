@@ -8,17 +8,13 @@ type StatsProps = {
 
 export default function StatCard({ title, value, Icon }: StatsProps) {
   return (
-    <div className="rounded-xl 
-      border
-      bg-card
-      p-6
-      shadow-sm
-      hover:shadow-md
-      transition"
+    <div className="transition-all duration-300 hover:-translate-y-1 hover:shadow-lg p-6"
     >
-      {<Icon className="h-5 w-5" />}
-      <h2>{title}</h2>
-      <p>{value}</p>
+      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-pink-100 text-pink-600">
+        <Icon className="h-6 w-6" />
+      </div>
+      <h2 className="text-sm text-muted-foreground">{title}</h2>
+      <p className="text-3xl font-bold">{value}</p>
     </div>
   )
 }

@@ -1,3 +1,4 @@
+import ProductActions from "@/components/product/ProductActions";
 import ProductBasicInfo from "@/components/product/ProductBasicInfo";
 import ProductCategory from "@/components/product/ProductCategory";
 import ProductForm from "@/components/product/ProductForm";
@@ -19,6 +20,8 @@ export default async function Page() {
         <ProductCategory categories={categories} />
         <Separator />
         <ProductImage />
+        <Separator />
+        <ProductActions />
       </ProductForm>
     </div>
   )

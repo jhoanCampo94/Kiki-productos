@@ -15,7 +15,7 @@ export default function ProductCard({ product }: Props) {
   const outOfStock = product.stock === 0;
 
   return (
-    <div className="rounded-2xl border bg-card p-6 shadow-sm transition hover:shadow-md">
+    <div className="rounded-2xl border-pink-100 bg-card p-6 shadow-sm hover:shadow-md transition-all duration-300">
       <h3 className="text-xl font-semibold">
         {product.name}
       </h3>
