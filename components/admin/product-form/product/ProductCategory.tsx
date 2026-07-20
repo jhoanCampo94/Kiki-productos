@@ -7,7 +7,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Category } from "@/types"
-import { Label } from "../ui/label";
+import { Label } from "@/components/ui/label";
 
 type CategoriesProps = {
   categories: Category[];

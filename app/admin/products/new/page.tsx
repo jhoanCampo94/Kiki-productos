@@ -1,9 +1,9 @@
-import ProductActions from "@/components/product/ProductActions";
-import ProductBasicInfo from "@/components/product/ProductBasicInfo";
-import ProductCategory from "@/components/product/ProductCategory";
-import ProductForm from "@/components/product/ProductForm";
-import ProductImage from "@/components/product/ProductImage";
-import ProductInventory from "@/components/product/ProductInventory";
+import ProductActions from "@/components/admin/product-form/product/ProductActions";
+import ProductBasicInfo from "@/components/admin/product-form/product/ProductBasicInfo";
+import ProductCategory from "@/components/admin/product-form/product/ProductCategory";
+import ProductForm from "@/components/admin/product-form/product/ProductForm";
+import ProductImage from "@/components/admin/product-form/product/ProductImage";
+import ProductInventory from "@/components/admin/product-form/product/ProductInventory";
 import { Separator } from "@/components/ui/separator";
 import { getCategories } from "@/services/categories.service";
 

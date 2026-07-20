@@ -1,14 +1,10 @@
 // import { getProducts } from "@/services/products.service";
 import Container from "../layout/Container";
-import ProductCard from "../product/ProductCard";
+import ProductCard from "../admin/product-form/product/ProductCard";
+import { products } from "./products";
 
 export default async function ProductsSection() {
-  const products = [
-    { id: "1", name: "pijama osito", price: 27000, stock: 3 },
-    { id: "2", name: "pijama rosa", price: 22000, stock: 1 },
-    { id: "3", name: "jean azul", price: 78000, stock: 0 },
-  ]
-
+  
   return (
     <section className="pb-16">
       <Container>

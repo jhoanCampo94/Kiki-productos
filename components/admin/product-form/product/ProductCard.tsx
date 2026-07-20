@@ -1,6 +1,7 @@
 // import type { Product } from "@/types";
 import { formatPrice } from "@/lib/formatPrice";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
+
 
 type Props = {
   product: {
