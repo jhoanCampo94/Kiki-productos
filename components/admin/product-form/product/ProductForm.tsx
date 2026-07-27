@@ -8,6 +8,7 @@ import ProductInventory from "./ProductInventory";
 import ProductCategory from "./ProductCategory";
 import ProductImage from "./ProductImage";
 import ProductActions from "./ProductActions";
+import { generateSlug } from "@/lib/slug";
 
 type ProductFormProps = {
   categories: Category[];
@@ -35,14 +36,18 @@ export default function ProductForm({ categories }: ProductFormProps) {
     image: null,
   })
 
-  function handleChange(
-    field: keyof ProductFormData,
-    value: string | number | File | null
-  ) {
+  function handleNameChange(name: string) {
     setFormData((prev) => ({
       ...prev,
+      name,
+      slug: generateSlug(name)
+    }))
+  }
 
-      [field]: value
+  function handleDescriptionChange(description: string) {
+    setFormData((prev) => ({
+      ...prev,
+      description
     }))
   }
 
@@ -58,7 +63,8 @@ export default function ProductForm({ categories }: ProductFormProps) {
               slug: formData.slug,
               description: formData.description
             }}
-            onChange={handleChange}
+            handleNameChange={handleNameChange}
+            handleDescriptionChange={handleDescriptionChange}
           />
           <Separator />
           <ProductInventory />

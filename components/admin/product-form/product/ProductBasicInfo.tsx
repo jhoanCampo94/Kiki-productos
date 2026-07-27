@@ -8,13 +8,11 @@ type ProductBasicInfoProps = {
     slug: string;
     description: string;
   },
-  onChange: (
-    field: "name" | "slug" | "description",
-    value: string
-  ) => void
+  handleNameChange: (name: string) => void;
+  handleDescriptionChange: (description: string) => void
 }
 
-export default function ProductBasicInfo({ data, onChange }: ProductBasicInfoProps) {
+export default function ProductBasicInfo({ data, handleNameChange, handleDescriptionChange }: ProductBasicInfoProps) {
 
   return (
     <section className="space-y-8">
@@ -33,7 +31,7 @@ export default function ProductBasicInfo({ data, onChange }: ProductBasicInfoPro
             id="product-name"
             placeholder="Ej: Pijama fucsia"
             value={data.name}
-            onChange={(e) => onChange("name", e.target.value)}
+            onChange={(e) => handleNameChange(e.target.value)}
           />
         </div>
 
@@ -59,7 +57,7 @@ export default function ProductBasicInfo({ data, onChange }: ProductBasicInfoPro
             className="resize-none"
             rows={5}
             value={data.description}
-            onChange={(e) => onChange("description", e.target.value)}
+            onChange={(e) => handleDescriptionChange(e.target.value)}
           />
         </div>
       </div>
