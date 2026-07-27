@@ -51,6 +51,34 @@ export default function ProductForm({ categories }: ProductFormProps) {
     }))
   }
 
+  function handlePriceChange(price: number) {
+    setFormData((prev) => ({
+      ...prev,
+      price
+    }))
+  }
+
+  function handleStockChange(stock: number) {
+    setFormData((prev) => ({
+      ...prev,
+      stock
+    }))
+  }
+
+  function handleCategoryChange(categoryId: string) {
+    setFormData((prev) => ({
+      ...prev,
+      categoryId
+    }))
+  }
+
+  function handleFileChange(image: File | null) {
+    setFormData((prev) => ({
+      ...prev,
+      image
+    }))
+  }
+
   return (
     <div>
       <h1 className="text-3xl font-bold tracking-tight">📦 Crear producto</h1>
@@ -67,13 +95,29 @@ export default function ProductForm({ categories }: ProductFormProps) {
             handleDescriptionChange={handleDescriptionChange}
           />
           <Separator />
-          <ProductInventory />
+          <ProductInventory
+            data={{
+              price: formData.price,
+              stock: formData.stock
+            }}
+            handlePriceChange={handlePriceChange}
+            handleStockChange={handleStockChange}
+          />
           <Separator />
           <ProductCategory
             categories={categories}
+            data={{
+              categoryId: formData.categoryId
+            }}
+            handleCategoryChange={handleCategoryChange}
           />
           <Separator />
-          <ProductImage />
+          <ProductImage
+            data={{
+              image: formData.image
+            }}
+            handleFileChange={handleFileChange}
+          />
           <Separator />
           <ProductActions />
         </div>

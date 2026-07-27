@@ -9,11 +9,15 @@ import {
 import { Category } from "@/types"
 import { Label } from "@/components/ui/label";
 
-type CategoriesProps = {
+type ProductCategoryProps = {
   categories: Category[];
+  data: {
+    categoryId: string;
+  }
+  handleCategoryChange: (categoryId: string) => void;
 }
 
-export default function ProductCategory({ categories }: CategoriesProps) {
+export default function ProductCategory({ categories, data, handleCategoryChange }: ProductCategoryProps ) {
 
   return (
     <section className="space-y-8">
@@ -24,10 +28,13 @@ export default function ProductCategory({ categories }: CategoriesProps) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
-          <Label>
+          <Label htmlFor="product-category">
             Categoría
           </Label>
-          <Select>
+          <Select
+            value={data.categoryId}
+            onValueChange={handleCategoryChange}
+          >
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Selecciona una categoría" />
             </SelectTrigger>
@@ -41,7 +48,7 @@ export default function ProductCategory({ categories }: CategoriesProps) {
                       </SelectItem>
                     )
                     : categories.map((cat) => (
-                      <SelectItem key={cat.id} value={cat.slug}>
+                      <SelectItem key={cat.id} value={cat.id}>
                         {cat.name}
                       </SelectItem>
                     ))

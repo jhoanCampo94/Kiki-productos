@@ -1,7 +1,16 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export default function ProductInventory() {
+type ProductInventoryProps = {
+  data: {
+    price: number,
+    stock: number,
+  };
+  handlePriceChange: (price: number) => void;
+  handleStockChange: (stock: number) => void;
+}
+
+export default function ProductInventory({ data, handlePriceChange, handleStockChange }: ProductInventoryProps) {
 
   return (
     <section className="space-y-8">
@@ -15,14 +24,27 @@ export default function ProductInventory() {
           <Label htmlFor="product-price">
             Precio
           </Label>
-          <Input type="number" id="product-price" placeholder="Ej: 45000" />
+          <Input
+            type="number"
+            id="product-price"
+            placeholder="Ej: 45000"
+            value={data.price}
+            onChange={(e) => handlePriceChange(Number(e.target.value))}
+          />
         </div>
 
         <div className="space-y-2">
           <Label htmlFor="stock">
             Cantidad
           </Label>
-          <Input type="number" min={0} id="stock" placeholder="Ej: 10" />
+          <Input
+            type="number"
+            min={0}
+            id="stock"
+            placeholder="Ej: 10"
+            value={data.stock}
+            onChange={(e) => handleStockChange(Number(e.target.value))}
+          />
         </div>
       </div>
     </section>

@@ -1,7 +1,14 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export default function ProductImage() {
+type ProductImageProps = {
+  data: {
+    image: File | null;
+  };
+  handleFileChange: (file: File | null) => void;
+}
+
+export default function ProductImage({ data, handleFileChange }: ProductImageProps) {
 
   return (
     <section className="space-y-8">
@@ -15,7 +22,15 @@ export default function ProductImage() {
           <Label htmlFor="product-image">
             Sube la imagen
           </Label>
-          <Input type="file" id="product-image" accept="image/*" />
+          <Input
+            type="file"
+            id="product-image"
+            accept="image/*"
+            onChange={(e) => {
+              const file = e.target.files?.[0] ?? null;
+              handleFileChange(file)
+            }}
+          />
         </div>
       </div>
     </section>
