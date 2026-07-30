@@ -2,6 +2,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Controller, UseFormReturn } from "react-hook-form";
 import { ProductFormData } from "@/schemas/product.schema";
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import { ImageIcon } from "lucide-react";
 
 type ProductImageProps = {
   form: UseFormReturn<ProductFormData>;
@@ -9,9 +12,28 @@ type ProductImageProps = {
 
 export default function ProductImage({ form }: ProductImageProps) {
 
-  const { 
+  const [preview, setPreview] = useState<string | null>(null);
+
+  const {
     formState: { errors },
   } = form;
+
+  const image = form.watch("image");
+
+  useEffect(() => {
+    if (!image) {
+      setPreview(null);
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(image);
+    setPreview(objectUrl);
+
+    return () => {
+      URL.revokeObjectURL(objectUrl);
+    }
+  }, [image])
+
 
   return (
     <section className="space-y-8">
@@ -40,6 +62,28 @@ export default function ProductImage({ form }: ProductImageProps) {
               />
             )}
           />
+          <div className="relative mt-6 flex h-72 w-64 items-center justify-center overflow-hidden rounded-lg border bg-muted">
+            {preview ? (
+              <Image
+                src={preview}
+                alt="Vista previa del producto"
+                fill
+                unoptimized
+                className="object-cover transition-opacity duration-300"
+              />
+            ) : (
+              <div className="text-center text-muted-foreground">
+                <ImageIcon className="mx-auto mb-3 h-12 w-12" />
+                <p className="text-lg font-medium">
+                  Sin imagen seleccionada
+                </p>
+
+                <p className="text-sm">
+                  La vista previa aparecerá aquí.
+                </p>
+              </div>
+            )}
+          </div>
           {errors.image && (
             <p className="text-sm text-destructive">
               {errors.image.message}
