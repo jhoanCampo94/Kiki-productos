@@ -8,16 +8,15 @@ import {
 } from "@/components/ui/select"
 import { Category } from "@/types"
 import { Label } from "@/components/ui/label";
+import { Controller, UseFormReturn } from "react-hook-form";
+import { ProductFormData } from "@/schemas/product.schema";
 
 type ProductCategoryProps = {
   categories: Category[];
-  data: {
-    categoryId: string;
-  }
-  handleCategoryChange: (categoryId: string) => void;
+  form: UseFormReturn<ProductFormData>;
 }
 
-export default function ProductCategory({ categories, data, handleCategoryChange }: ProductCategoryProps ) {
+export default function ProductCategory({ categories, form }: ProductCategoryProps) {
 
   return (
     <section className="space-y-8">
@@ -28,34 +27,40 @@ export default function ProductCategory({ categories, data, handleCategoryChange
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
-          <Label htmlFor="product-category">
+          <Label>
             Categoría
           </Label>
-          <Select
-            value={data.categoryId}
-            onValueChange={handleCategoryChange}
-          >
-            <SelectTrigger className="w-full">
-              <SelectValue placeholder="Selecciona una categoría" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                {
-                  categories.length === 0
-                    ? (
-                      <SelectItem disabled value="empty">
-                        No hay categorías
-                      </SelectItem>
-                    )
-                    : categories.map((cat) => (
-                      <SelectItem key={cat.id} value={cat.id}>
-                        {cat.name}
-                      </SelectItem>
-                    ))
-                }
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+          <Controller
+            name="categoryId"
+            control={form.control}
+            render={({ field }) => (
+              <Select
+                value={field.value}
+                onValueChange={field.onChange}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Selecciona una categoría" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {
+                      categories.length === 0
+                        ? (
+                          <SelectItem disabled value="empty">
+                            No hay categorías
+                          </SelectItem>
+                        )
+                        : categories.map((cat) => (
+                          <SelectItem key={cat.id} value={cat.id}>
+                            {cat.name}
+                          </SelectItem>
+                        ))
+                    }
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            )}
+          />
         </div>
       </div>
     </section>

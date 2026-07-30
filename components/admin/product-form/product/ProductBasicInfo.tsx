@@ -1,18 +1,27 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { UseFormReturn } from "react-hook-form";
+import { ProductFormData } from "@/schemas/product.schema";
+import { useEffect } from "react";
+import { generateSlug } from "@/lib/slug";
+import { useWatch } from "react-hook-form";
 
 type ProductBasicInfoProps = {
-  data: {
-    name: string;
-    slug: string;
-    description: string;
-  },
-  handleNameChange: (name: string) => void;
-  handleDescriptionChange: (description: string) => void
+  form: UseFormReturn<ProductFormData>;
 }
 
-export default function ProductBasicInfo({ data, handleNameChange, handleDescriptionChange }: ProductBasicInfoProps) {
+export default function ProductBasicInfo({ form }: ProductBasicInfoProps) {
+
+  const { register } = form;
+  const name = useWatch({
+    control: form.control,
+    name: "name",
+  })
+
+  useEffect(() => {
+    form.setValue("slug", generateSlug(name));
+  }, [form, name])
 
   return (
     <section className="space-y-8">
@@ -30,8 +39,7 @@ export default function ProductBasicInfo({ data, handleNameChange, handleDescrip
             type="text"
             id="product-name"
             placeholder="Ej: Pijama fucsia"
-            value={data.name}
-            onChange={(e) => handleNameChange(e.target.value)}
+            {...register("name")}
           />
         </div>
 
@@ -43,7 +51,7 @@ export default function ProductBasicInfo({ data, handleNameChange, handleDescrip
             type="text"
             id="slug"
             placeholder="pijama-fucsia"
-            value={data.slug}
+            {...register("slug")}
             disabled
           />
         </div>
@@ -56,8 +64,7 @@ export default function ProductBasicInfo({ data, handleNameChange, handleDescrip
             placeholder="pijama de tela suave y cómoda para dormir..."
             className="resize-none"
             rows={5}
-            value={data.description}
-            onChange={(e) => handleDescriptionChange(e.target.value)}
+            {...register("description")}
           />
         </div>
       </div>

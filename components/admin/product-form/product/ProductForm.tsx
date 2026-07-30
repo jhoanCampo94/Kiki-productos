@@ -1,82 +1,38 @@
 "use client";
 import { Card } from "@/components/ui/card";
 import { Category } from "@/types";
-import { useState } from "react";
 import ProductBasicInfo from "./ProductBasicInfo";
 import { Separator } from "@/components/ui/separator";
 import ProductInventory from "./ProductInventory";
 import ProductCategory from "./ProductCategory";
 import ProductImage from "./ProductImage";
 import ProductActions from "./ProductActions";
-import { generateSlug } from "@/lib/slug";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { productSchema, ProductFormData } from "@/schemas/product.schema";
 
 type ProductFormProps = {
   categories: Category[];
 }
 
-type ProductFormData = {
-  name: string;
-  slug: string;
-  description: string;
-  price: number;
-  stock: number;
-  categoryId: string;
-  image: File | null;
-};
-
 export default function ProductForm({ categories }: ProductFormProps) {
 
-  const [formData, setFormData] = useState<ProductFormData>({
-    name: "",
-    slug: "",
-    description: "",
-    price: 0,
-    stock: 0,
-    categoryId: "",
-    image: null,
-  })
-
-  function handleNameChange(name: string) {
-    setFormData((prev) => ({
-      ...prev,
-      name,
-      slug: generateSlug(name)
-    }))
+  const form = useForm<ProductFormData>({
+    resolver: zodResolver(productSchema),
+    defaultValues: {
+      name: "",
+      slug: "",
+      description: "",
+      price: 0,
+      stock: 0,
+      categoryId: "",
+      image: null,
+    },
   }
+  )
 
-  function handleDescriptionChange(description: string) {
-    setFormData((prev) => ({
-      ...prev,
-      description
-    }))
-  }
-
-  function handlePriceChange(price: number) {
-    setFormData((prev) => ({
-      ...prev,
-      price
-    }))
-  }
-
-  function handleStockChange(stock: number) {
-    setFormData((prev) => ({
-      ...prev,
-      stock
-    }))
-  }
-
-  function handleCategoryChange(categoryId: string) {
-    setFormData((prev) => ({
-      ...prev,
-      categoryId
-    }))
-  }
-
-  function handleFileChange(image: File | null) {
-    setFormData((prev) => ({
-      ...prev,
-      image
-    }))
+  const onSubmit = (data: ProductFormData) => {
+    // TODO: Implementar la creación del producto.
   }
 
   return (
@@ -84,43 +40,31 @@ export default function ProductForm({ categories }: ProductFormProps) {
       <h1 className="text-3xl font-bold tracking-tight">📦 Crear producto</h1>
       <p className="text-muted-foreground">Registra tu producto para que aparezca en la tienda!</p>
       <Card className="mx-auto mt-8 max-w-4xl p-8 shadow-lg">
-        <div className="space-y-10">
+        <form
+          className="space-y-10"
+          onSubmit={form.handleSubmit(onSubmit, (errors) => {
+            console.log(errors);
+          })}
+        >
           <ProductBasicInfo
-            data={{
-              name: formData.name,
-              slug: formData.slug,
-              description: formData.description
-            }}
-            handleNameChange={handleNameChange}
-            handleDescriptionChange={handleDescriptionChange}
+            form={form}
           />
           <Separator />
           <ProductInventory
-            data={{
-              price: formData.price,
-              stock: formData.stock
-            }}
-            handlePriceChange={handlePriceChange}
-            handleStockChange={handleStockChange}
+            form={form}
           />
           <Separator />
           <ProductCategory
             categories={categories}
-            data={{
-              categoryId: formData.categoryId
-            }}
-            handleCategoryChange={handleCategoryChange}
+            form={form}
           />
           <Separator />
           <ProductImage
-            data={{
-              image: formData.image
-            }}
-            handleFileChange={handleFileChange}
+            form={form}
           />
           <Separator />
           <ProductActions />
-        </div>
+        </form>
       </Card>
     </div>
   )

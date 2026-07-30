@@ -1,14 +1,13 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Controller, UseFormReturn } from "react-hook-form";
+import { ProductFormData } from "@/schemas/product.schema";
 
 type ProductImageProps = {
-  data: {
-    image: File | null;
-  };
-  handleFileChange: (file: File | null) => void;
+  form: UseFormReturn<ProductFormData>;
 }
 
-export default function ProductImage({ data, handleFileChange }: ProductImageProps) {
+export default function ProductImage({ form }: ProductImageProps) {
 
   return (
     <section className="space-y-8">
@@ -22,14 +21,20 @@ export default function ProductImage({ data, handleFileChange }: ProductImagePro
           <Label htmlFor="product-image">
             Sube la imagen
           </Label>
-          <Input
-            type="file"
-            id="product-image"
-            accept="image/*"
-            onChange={(e) => {
-              const file = e.target.files?.[0] ?? null;
-              handleFileChange(file)
-            }}
+          <Controller
+            name="image"
+            control={form.control}
+            render={({ field: { onChange, ref } }) => (
+              <Input
+                id="product-image"
+                type="file"
+                accept="image/*"
+                ref={ref}
+                onChange={(e) => {
+                  onChange(e.target.files?.[0] ?? null)
+                }}
+              />
+            )}
           />
         </div>
       </div>

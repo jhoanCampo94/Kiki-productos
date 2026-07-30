@@ -1,16 +1,15 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { UseFormReturn } from "react-hook-form";
+import { ProductFormData } from "@/schemas/product.schema";
 
 type ProductInventoryProps = {
-  data: {
-    price: number,
-    stock: number,
-  };
-  handlePriceChange: (price: number) => void;
-  handleStockChange: (stock: number) => void;
+  form: UseFormReturn<ProductFormData>;
 }
 
-export default function ProductInventory({ data, handlePriceChange, handleStockChange }: ProductInventoryProps) {
+export default function ProductInventory({ form }: ProductInventoryProps) {
+
+  const { register } = form;
 
   return (
     <section className="space-y-8">
@@ -28,8 +27,9 @@ export default function ProductInventory({ data, handlePriceChange, handleStockC
             type="number"
             id="product-price"
             placeholder="Ej: 45000"
-            value={data.price}
-            onChange={(e) => handlePriceChange(Number(e.target.value))}
+            {...register("price", {
+              valueAsNumber: true,
+            })}
           />
         </div>
 
@@ -42,8 +42,9 @@ export default function ProductInventory({ data, handlePriceChange, handleStockC
             min={0}
             id="stock"
             placeholder="Ej: 10"
-            value={data.stock}
-            onChange={(e) => handleStockChange(Number(e.target.value))}
+            {...register("stock", {
+              valueAsNumber: true,
+            })}
           />
         </div>
       </div>

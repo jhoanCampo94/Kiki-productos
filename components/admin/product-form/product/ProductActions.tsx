@@ -8,7 +8,7 @@ export default function ProductActions() {
           🩷 Cancelar
         </Button>
 
-        <Button>
+        <Button type="submit">
           🤍 Guardar producto
         </Button>
       </div>
