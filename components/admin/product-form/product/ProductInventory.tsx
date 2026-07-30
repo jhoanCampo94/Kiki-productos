@@ -9,7 +9,10 @@ type ProductInventoryProps = {
 
 export default function ProductInventory({ form }: ProductInventoryProps) {
 
-  const { register } = form;
+  const {
+    register,
+    formState: { errors },
+  } = form;
 
   return (
     <section className="space-y-8">
@@ -31,6 +34,11 @@ export default function ProductInventory({ form }: ProductInventoryProps) {
               valueAsNumber: true,
             })}
           />
+          {errors.price && (
+            <p className="text-sm text-destructive">
+              {errors.price.message}
+            </p>
+          )}
         </div>
 
         <div className="space-y-2">
@@ -46,6 +54,11 @@ export default function ProductInventory({ form }: ProductInventoryProps) {
               valueAsNumber: true,
             })}
           />
+          {errors.stock && (
+            <p className="text-sm text-destructive">
+              {errors.stock.message}
+            </p>
+          )}
         </div>
       </div>
     </section>

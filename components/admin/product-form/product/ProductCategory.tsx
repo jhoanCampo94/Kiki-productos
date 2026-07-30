@@ -18,6 +18,10 @@ type ProductCategoryProps = {
 
 export default function ProductCategory({ categories, form }: ProductCategoryProps) {
 
+  const {
+    formState: { errors },
+  } = form;
+
   return (
     <section className="space-y-8">
       <header className="space-y-2">
@@ -33,12 +37,12 @@ export default function ProductCategory({ categories, form }: ProductCategoryPro
           <Controller
             name="categoryId"
             control={form.control}
-            render={({ field }) => (
+            render={({ field, fieldState }) => (
               <Select
                 value={field.value}
                 onValueChange={field.onChange}
               >
-                <SelectTrigger className="w-full">
+                <SelectTrigger className={`w-full ${fieldState.error ? "text-destructive" : ""}`}>
                   <SelectValue placeholder="Selecciona una categoría" />
                 </SelectTrigger>
                 <SelectContent>
@@ -61,6 +65,11 @@ export default function ProductCategory({ categories, form }: ProductCategoryPro
               </Select>
             )}
           />
+          {errors.categoryId && (
+            <p className="text-sm text-destructive">
+              {errors.categoryId.message}
+            </p>
+          )}
         </div>
       </div>
     </section>

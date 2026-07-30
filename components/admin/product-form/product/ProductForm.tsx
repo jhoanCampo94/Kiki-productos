@@ -19,6 +19,7 @@ export default function ProductForm({ categories }: ProductFormProps) {
 
   const form = useForm<ProductFormData>({
     resolver: zodResolver(productSchema),
+    mode: "onSubmit",
     defaultValues: {
       name: "",
       slug: "",

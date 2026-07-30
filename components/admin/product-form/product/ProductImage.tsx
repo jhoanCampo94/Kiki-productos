@@ -9,6 +9,10 @@ type ProductImageProps = {
 
 export default function ProductImage({ form }: ProductImageProps) {
 
+  const { 
+    formState: { errors },
+  } = form;
+
   return (
     <section className="space-y-8">
       <header className="space-y-2">
@@ -36,6 +40,11 @@ export default function ProductImage({ form }: ProductImageProps) {
               />
             )}
           />
+          {errors.image && (
+            <p className="text-sm text-destructive">
+              {errors.image.message}
+            </p>
+          )}
         </div>
       </div>
     </section>

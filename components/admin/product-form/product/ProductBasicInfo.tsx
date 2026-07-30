@@ -13,7 +13,11 @@ type ProductBasicInfoProps = {
 
 export default function ProductBasicInfo({ form }: ProductBasicInfoProps) {
 
-  const { register } = form;
+  const {
+    register,
+    formState: { errors }
+  } = form;
+  
   const name = useWatch({
     control: form.control,
     name: "name",
@@ -41,6 +45,11 @@ export default function ProductBasicInfo({ form }: ProductBasicInfoProps) {
             placeholder="Ej: Pijama fucsia"
             {...register("name")}
           />
+          {errors.name && (
+            <p className="text-sm text-destructive">
+              {errors.name.message}
+            </p>
+          )}
         </div>
 
         <div className="space-y-2">
@@ -66,6 +75,11 @@ export default function ProductBasicInfo({ form }: ProductBasicInfoProps) {
             rows={5}
             {...register("description")}
           />
+          {errors.description && (
+            <p className="text-sm text-destructive">
+              {errors.description.message}
+            </p>
+          )}
         </div>
       </div>
     </section>
