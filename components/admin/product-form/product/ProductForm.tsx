@@ -10,6 +10,7 @@ import ProductActions from "./ProductActions";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { productSchema, ProductFormData } from "@/schemas/product.schema";
+import { createProduct } from "@/actions/products";
 
 type ProductFormProps = {
   categories: Category[];
@@ -32,8 +33,8 @@ export default function ProductForm({ categories }: ProductFormProps) {
   }
   )
 
-  const onSubmit = (data: ProductFormData) => {
-    // TODO: Implementar la creación del producto.
+  const onSubmit = async (data: ProductFormData) => {
+    await createProduct(data);
   }
 
   return (
