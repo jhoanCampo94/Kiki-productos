@@ -25,9 +25,9 @@ export const productSchema = z.object({
     .string()
     .min(1, "Debes seleccionar una categoría"),
 
-  image: z
-    .instanceof(File)
-    .nullable(),
+  image: z.instanceof(File, {
+    message: "Debes seleccionar una imagen.",
+  })
 });
 
 export type ProductFormData = z.infer<typeof productSchema>;
