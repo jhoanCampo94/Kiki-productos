@@ -47,6 +47,7 @@ export type Database = {
           name: string
           price: number
           slug: string
+          image_url: string | null
           stock: number
           updated_at: string
         }
