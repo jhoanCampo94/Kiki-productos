@@ -10,37 +10,47 @@ import ProductActions from "./ProductActions";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { productSchema, ProductFormData } from "@/schemas/product.schema";
-import { createProduct } from "@/actions/products";
+import { createProduct, updateProduct } from "@/actions/products";
+import type { Product } from "@/types";
 
 type ProductFormProps = {
   categories: Category[];
+  product?: Product;
 }
 
-export default function ProductForm({ categories }: ProductFormProps) {
+export default function ProductForm({ categories, product }: ProductFormProps) {
 
   const form = useForm<ProductFormData>({
     resolver: zodResolver(productSchema),
-    mode: "onSubmit",
     defaultValues: {
-      name: "",
-      slug: "",
-      description: "",
-      price: 0,
-      stock: 0,
-      categoryId: "",
-      image: null,
+      name: product?.name ?? "",
+      slug: product?.slug ?? "",
+      description: product?.description ?? "",
+      price: product?.price ?? 0,
+      stock: product?.stock ?? 0,
+      categoryId: product?.category_id ?? "",
+      image: undefined,
     },
-  }
-  )
+  });
 
   const onSubmit = async (data: ProductFormData) => {
-    await createProduct(data);
+    if (product) {
+      await updateProduct(product.id, data);
+    } else {
+      await createProduct(data);
+    }
   }
 
   return (
     <div>
-      <h1 className="text-3xl font-bold tracking-tight">📦 Crear producto</h1>
-      <p className="text-muted-foreground">Registra tu producto para que aparezca en la tienda!</p>
+      <h1 className="text-3xl font-bold tracking-tight">
+        {product ? "✏️ Editar producto" : "📦 Crear producto"}
+      </h1>
+      <p className="text-muted-foreground">
+        {product
+          ? "Actualiza la información del producto."
+          : "Registra tu producto para que aparezca en la tienda!"}
+      </p>
       <Card className="mx-auto mt-8 max-w-4xl p-8 shadow-lg">
         <form
           className="space-y-10"

@@ -27,7 +27,7 @@ export const productSchema = z.object({
 
   image: z.instanceof(File, {
     message: "Debes seleccionar una imagen.",
-  })
+  }).optional(),
 });
 
 export type ProductFormData = z.infer<typeof productSchema>;
