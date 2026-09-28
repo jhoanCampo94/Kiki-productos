@@ -26,6 +26,9 @@ export async function createProduct(data: ProductFormData) {
     categoryId: data.categoryId,
     imageUrl
   });
+
+  revalidatePath("/admin/products");
+  redirect("/admin/products");
 }
 
 export async function updateProduct(id: string, data: ProductFormData) {

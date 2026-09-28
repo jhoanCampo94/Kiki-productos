@@ -13,6 +13,16 @@ import { productSchema, ProductFormData } from "@/schemas/product.schema";
 import { createProduct, updateProduct } from "@/actions/products";
 import type { Product } from "@/types";
 
+function isRedirectError(error: unknown): boolean {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "digest" in error &&
+    typeof (error as { digest?: unknown }).digest === "string" &&
+    (error as { digest: string }).digest.startsWith("NEXT_REDIRECT")
+  );
+}
+
 type ProductFormProps = {
   categories: Category[];
   product?: Product;
@@ -34,10 +44,24 @@ export default function ProductForm({ categories, product }: ProductFormProps) {
   });
 
   const onSubmit = async (data: ProductFormData) => {
-    if (product) {
-      await updateProduct(product.id, data);
-    } else {
-      await createProduct(data);
+    form.clearErrors("root");
+
+    try {
+      if (product) {
+        await updateProduct(product.id, data);
+      } else {
+        await createProduct(data);
+      }
+    } catch (error) {
+      if (isRedirectError(error)) {
+        throw error;
+      }
+
+      form.setError("root", {
+        message: error instanceof Error
+          ? error.message
+          : "Ocurrió un error inesperado. Inténtalo de nuevo.",
+      });
     }
   }
 
@@ -75,6 +99,11 @@ export default function ProductForm({ categories, product }: ProductFormProps) {
             form={form}
           />
           <Separator />
+          {form.formState.errors.root && (
+            <p className="text-center text-sm text-destructive">
+              {form.formState.errors.root.message}
+            </p>
+          )}
           <ProductActions />
         </form>
       </Card>

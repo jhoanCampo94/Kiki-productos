@@ -24,21 +24,11 @@ export default async function EditProductPage({
   }
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold tracking-tight">
-        ✏️ Editar producto
-      </h1>
-
-      <p className="text-muted-foreground">
-        Modifica la información del producto.
-      </p>
-
-      <div className="mt-8">
-        <ProductForm
-          categories={categories}
-          product={product}
-        />
-      </div>
+    <div className="space-y-8">
+      <ProductForm
+        categories={categories}
+        product={product}
+      />
     </div>
   );
 }
