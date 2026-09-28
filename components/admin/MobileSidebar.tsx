@@ -7,7 +7,7 @@ export default function MobileSidebar() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <button className="rounded-md p-2 hover:bg-muted">
+        <button className="cursor-pointer rounded-md p-2 hover:bg-muted">
           <Menu className="h-6 w-6" />
         </button>
       </SheetTrigger>
