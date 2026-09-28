@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Container from "@/components/layout/Container";
 
@@ -14,8 +15,10 @@ export default function Hero() {
             Descubre prendas cómodas, modernas y pensadas para cada ocasión.
           </p>
 
-          <Button className="mt-8">
-            Explorar categorías
+          <Button asChild className="mt-8">
+            <Link href="#productos">
+              Ver todos los productos
+            </Link>
           </Button>
         </div>
       </Container>
