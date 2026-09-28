@@ -1,13 +1,13 @@
 import { getProducts } from "@/services/products.service";
 import Container from "../layout/Container";
-import ProductCard from "../admin/product-form/product/ProductCard";
+import ProductCard from "../product/ProductCard";
 
 export default async function ProductsSection() {
   const products = await getProducts();
 
 
   return (
-    <section className="pb-16">
+    <section id="productos" className="pb-16">
       <Container>
         <h2 className="mb-8 text-3xl font-semibold">
           Productos

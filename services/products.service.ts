@@ -19,9 +19,58 @@ export async function getProducts(): Promise<ProductWithCategory[]> {
         *,
         categories (
           id,
-          name
+          name,
+          slug
         )
     `);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data ?? [];
+}
+
+export async function getProductBySlug(
+  slug: string
+): Promise<ProductWithCategory | null> {
+  const { data, error } = await supabase
+    .from("products")
+    .select(`
+        *,
+        categories (
+          id,
+          name,
+          slug
+        )
+    `)
+    .eq("slug", slug)
+    .single();
+
+  if (error) {
+    if (error.code === "PGRST116") {
+      return null;
+    }
+    throw new Error(error.message);
+  }
+
+  return data;
+}
+
+export async function getProductsByCategoryId(
+  categoryId: string
+): Promise<ProductWithCategory[]> {
+  const { data, error } = await supabase
+    .from("products")
+    .select(`
+        *,
+        categories (
+          id,
+          name,
+          slug
+        )
+    `)
+    .eq("category_id", categoryId);
 
   if (error) {
     throw new Error(error.message);

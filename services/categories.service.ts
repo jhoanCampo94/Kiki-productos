@@ -17,6 +17,24 @@ export async function getCategories(): Promise<Category[]> {
   return data ?? [];
 }
 
+export async function getCategoryBySlug(slug: string): Promise<Category | null> {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("categories")
+    .select("*")
+    .eq("slug", slug)
+    .single();
+
+  if (error) {
+    if (error.code === "PGRST116") {
+      return null;
+    }
+    throw new Error(error.message);
+  }
+
+  return data;
+}
+
 export async function saveCategory(data: CategoryFormData) {
   const { error } = await adminClient
     .from("categories")

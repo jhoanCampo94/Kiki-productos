@@ -4,5 +4,6 @@ export type ProductWithCategory = Product & {
   categories: {
     id: string;
     name: string;
+    slug: string;
   } | null;
 };
